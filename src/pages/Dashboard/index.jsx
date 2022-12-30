@@ -4,6 +4,7 @@ import "./dashboard.css";
 import moonImg from "../../assets/img/moon.png";
 import logoImg from "../../assets/img/lgkhegr (1).png";
 import dateImg from "../../assets/img/date.png";
+import macproImg from "../../assets/img/macbookpro14-16inch-1.jpg";
 
 Dashboard.propTypes = {};
 
@@ -313,54 +314,161 @@ function Dashboard(props) {
   }, []);
   return (
     <>
-      <div className="container">
-        <div className="bgr-container">
-          <div className="box-bgr">
-            <div className="moon">
+      <div className='container'>
+        <div className='bgr-container'>
+          <div className='box-bgr'>
+            <div className='moon'>
               <button onClick={showToggleMenu}>
-                <img src={moonImg} alt="" />
+                <img src={moonImg} alt='' />
               </button>
               {!!showMenu && (
-                <ul className="menu">
-                  <li className={`menu-item ${step === 1 && "active"}`}>
+                <ul className='menu'>
+                  <li
+                    onClick={() => setStep(1)}
+                    className={`menu-item ${step === 1 && "active"}`}
+                  >
                     Trang chờ
                   </li>
-                  <li className="menu-item">Quay số</li>
+                  <li
+                    onClick={() => setStep(2)}
+                    className={`menu-item ${step === 2 && "active"}`}
+                  >
+                    Quay số
+                  </li>
                 </ul>
               )}
             </div>
-            <div className="box-text-noel">
-              <div className="text-noel">
-                <img src={logoImg} alt="" width={350} />
+            <div className='box-text-noel'>
+              <div className='text-noel'>
+                <img src={logoImg} alt='' width={250} />
               </div>
               <span></span>
             </div>
-            <div className="house">
-              <img src={dateImg} alt="" />
+            {/* <div className='house'>
+              <img src={dateImg} alt='' />
+            </div> */}
+          </div>
+        </div>
+        {step === 2 && (
+          <section>
+            <div className='box-santa'>
+              <div
+                className='row'
+                style={{ position: "absolute", zIndex: "1" }}
+              >
+                <div className='col-sm-4'>
+                  <div className='card'>
+                    <img src={macproImg} className='card-img-top' alt='...' />
+                    <div className='card-body'>
+                      <h5 className='card-title'>Giải mong chờ nhất</h5>
+                      <p className='card-text'>Macbook pro</p>
+                      <button
+                        type='button'
+                        class='btn btn-primary'
+                        data-bs-toggle='modal'
+                        data-bs-target='#exampleModal'
+                      >
+                        Quay số
+                      </button>
+                      <a href='#' className='btn btn-primary mx-2'>
+                        Kêt quả
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div className='col-sm-4'>
+                  <div className='card'>
+                    <img src='' className='card-img-top' alt='...' />
+                    <div className='card-body'>
+                      <h5 className='card-title'>Card title</h5>
+                      <p className='card-text'>
+                        Some quick example text to build on the card title and
+                        make up the bulk of the card's content.
+                      </p>
+                      <a href='#' className='btn btn-primary'>
+                        Go somewhere
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div className='col-sm-4'>
+                  <div className='card'>
+                    <img src='' className='card-img-top' alt='...' />
+                    <div className='card-body'>
+                      <h5 className='card-title'>Card title</h5>
+                      <p className='card-text'>
+                        Some quick example text to build on the card title and
+                        make up the bulk of the card's content.
+                      </p>
+                      <a href='#' className='btn btn-primary'>
+                        Go somewhere
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+        {step === 0 && (
+          <section>
+            <div class='box-santa'>
+              <div class='santa-container'>
+                <div class='box-noel-gif'>
+                  <div class='noel-gif1'></div>
+                  <div class='noel-gift2'></div>
+                </div>
+                <div class='box-gift'>
+                  <div class='gift-bottom'></div>
+                  <div class='gift-top'></div>
+                  <div class='box-fastener'>
+                    <div class='fastener1'></div>
+                    <div class='fastener2'></div>
+                  </div>
+                  <div class='content'></div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+      </div>
+      <canvas id='canvas'> </canvas>
+      <div
+        class='modal fade'
+        id='exampleModal'
+        tabindex='-1'
+        aria-labelledby='exampleModalLabel'
+        aria-hidden='true'
+      >
+        <div class='modal-dialog'>
+          <div class='modal-content'>
+            <div class='modal-header'>
+              <h5 class='modal-title' id='exampleModalLabel'>
+                Modal title
+              </h5>
+              <button
+                type='button'
+                class='btn-close'
+                data-bs-dismiss='modal'
+                aria-label='Close'
+              ></button>
+            </div>
+            <div class='modal-body'>...</div>
+            <div class='modal-footer'>
+              <button
+                type='button'
+                class='btn btn-secondary'
+                data-bs-dismiss='modal'
+              >
+                Close
+              </button>
+              <button type='button' class='btn btn-primary'>
+                Save changes
+              </button>
             </div>
           </div>
         </div>
-        <section>
-          <div class="box-santa">
-            <div class="santa-container">
-              <div class="box-noel-gif">
-                <div class="noel-gif1"></div>
-                <div class="noel-gift2"></div>
-              </div>
-              <div class="box-gift">
-                <div class="gift-bottom"></div>
-                <div class="gift-top"></div>
-                <div class="box-fastener">
-                  <div class="fastener1"></div>
-                  <div class="fastener2"></div>
-                </div>
-                <div class="content"></div>
-              </div>
-            </div>
-          </div>
-        </section>
       </div>
-      <canvas id="canvas"> </canvas>
     </>
   );
 }
