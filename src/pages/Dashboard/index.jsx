@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import "./dashboard.css";
 import { Modal, Button } from "react-bootstrap";
@@ -10,6 +10,10 @@ import leftIcon from "../../assets/img/left_gh9ln8er1m6n_32 (1).png";
 import rightIcon from "../../assets/img/right_vi24vzlqsbfj_32.png";
 import adward2 from "../../assets/img/Picture1.png";
 import adward3 from "../../assets/img/Picture2.png";
+
+const TIME_PLACE = {
+  date: "8:00 - 14:00 | Thứ hai, ngày 09/01/2023",
+};
 
 Dashboard.propTypes = {};
 
@@ -23,6 +27,36 @@ function Dashboard(props) {
   const [n1, setN1] = useState(0);
   const [n2, setN2] = useState(0);
   const [n3, setN3] = useState(0);
+  const [timerDays, setTimerDays] = useState("00");
+  const [timerHours, setTimerHours] = useState("00");
+  const [timerMinutes, setTimerMinutes] = useState("00");
+  const [timerSeconds, setTimerSeconds] = useState("00");
+
+  let interval = useRef();
+
+  const startTimer = () => {
+    const countDownDate = new Date("Jan 09, 2023 00:00:00").getTime();
+
+    interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = countDownDate - now;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      if (distance < 0) {
+        clearInterval(interval.current);
+      } else {
+        setTimerDays(days < 10 ? `0${days}` : `${days}`);
+        setTimerHours(hours < 10 ? `0${hours}` : `${hours}`);
+        setTimerMinutes(minutes < 10 ? `0${minutes}` : `${minutes}`);
+        setTimerSeconds(seconds < 10 ? `0${seconds}` : `${seconds}`);
+      }
+    });
+  };
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
@@ -356,13 +390,20 @@ function Dashboard(props) {
     window.onload = loop;
   }, []);
 
+  useEffect(() => {
+    startTimer();
+    return () => {
+      clearInterval(interval.current);
+    };
+  });
+
   const Slide = () => {
     return (
       <div className="slide-container">
         <div id="slide">
           <div className={`item ${slideActive === 0 && "slide-active"}`}>
             <div className="image">
-              <img src={macproImg} />
+              <img loading="lazy" src={macproImg} />
             </div>
             <div className="content">
               <div className="right">
@@ -401,7 +442,7 @@ function Dashboard(props) {
           </div>
           <div className={`item ${slideActive === 1 && "slide-active"}`}>
             <div className="image">
-              <img src={adward2} />
+              <img loading="lazy" src={adward2} />
             </div>
             <div className="content">
               <div className="right">
@@ -436,7 +477,7 @@ function Dashboard(props) {
           </div>
           <div className={`item ${slideActive === 2 && "slide-active"}`}>
             <div className="image">
-              <img src={adward3} />
+              <img loading="lazy" src={adward3} />
             </div>
             <div className="content">
               <div className="right">
@@ -484,30 +525,59 @@ function Dashboard(props) {
   };
   return (
     <>
+      <div className="menu-wrapper">
+        <div className="moon">
+          <button onClick={showToggleMenu}>
+            <img src={moonImg} alt="" />
+          </button>
+          {!!showMenu && (
+            <ul className="menu">
+              <li
+                onClick={() => setStep(1)}
+                className={`menu-item ${step === 1 && "active"}`}
+              >
+                Trang chờ
+              </li>
+              <li
+                onClick={() => setStep(2)}
+                className={`menu-item ${step === 2 && "active"}`}
+              >
+                Quay số
+              </li>
+            </ul>
+          )}
+        </div>
+      </div>
+      <div className="left-info">
+        <div className="left-info-container">
+          <div className="left-info__time">
+            <div className="left-info__time-item left-info__time-item__content--border">
+              <div className="left-info__time-item__content">{timerDays}</div>
+              <div>Ngày</div>
+            </div>
+            <div className="left-info__time-item left-info__time-item__content--border">
+              <div className="left-info__time-item__content">{timerHours}</div>
+              <div>Giờ</div>
+            </div>
+            <div className="left-info__time-item left-info__time-item__content--border">
+              <div className="left-info__time-item__content">
+                {timerMinutes}
+              </div>
+              <div>Phút</div>
+            </div>
+            <div className="left-info__time-item ">
+              <div className="left-info__time-item__content">
+                {timerSeconds}
+              </div>
+              <div>Giây</div>
+            </div>
+          </div>
+          <div className="left-info__subcontent">{TIME_PLACE.date}</div>
+        </div>
+      </div>
       <div className="container">
         <div className="bgr-container">
           <div className="box-bgr">
-            <div className="moon">
-              <button onClick={showToggleMenu}>
-                <img src={moonImg} alt="" />
-              </button>
-              {!!showMenu && (
-                <ul className="menu">
-                  <li
-                    onClick={() => setStep(1)}
-                    className={`menu-item ${step === 1 && "active"}`}
-                  >
-                    Trang chờ
-                  </li>
-                  <li
-                    onClick={() => setStep(2)}
-                    className={`menu-item ${step === 2 && "active"}`}
-                  >
-                    Quay số
-                  </li>
-                </ul>
-              )}
-            </div>
             <div className="box-text-noel">
               <div className="text-noel">
                 <img src={logoImg} alt="" width={250} />
@@ -522,56 +592,6 @@ function Dashboard(props) {
         {step === 2 && (
           <section>
             <div className="box-santa">
-              {/* <div
-                className="row"
-                style={{ position: "absolute", zIndex: "1" }}
-              >
-                <div className="col-sm-4">
-                  <div className="card">
-                    <img src={macproImg} className="card-img-top" alt="..." />
-                    <div className="card-body">
-                      <h5 className="card-title">Giải mong chờ nhất</h5>
-                      <p className="card-text">Macbook pro</p>
-                      <Button variant="primary" onClick={handleShow}>
-                        Launch demo modal
-                      </Button>
-                      <a href="#" className="btn btn-primary mx-2">
-                        Kêt quả
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-sm-4">
-                  <div className="card">
-                    <img src="" className="card-img-top" alt="..." />
-                    <div className="card-body">
-                      <h5 className="card-title">Card title</h5>
-                      <p className="card-text">
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                      </p>
-                      <a href="#" className="btn btn-primary">
-                        Go somewhere
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-sm-4">
-                  <div className="card">
-                    <img src="" className="card-img-top" alt="..." />
-                    <div className="card-body">
-                      <h5 className="card-title">Card title</h5>
-                      <p className="card-text">
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                      </p>
-                      <a href="#" className="btn btn-primary">
-                        Go somewhere
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
               <Slide />
             </div>
           </section>
