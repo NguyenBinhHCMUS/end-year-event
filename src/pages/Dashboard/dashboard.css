@@ -660,7 +660,7 @@ section {
   justify-content: center;
   align-items: end;
   animation: imageslide 0.5s forwards;
-  transition: 1.5s;
+  /* transition: 1.5s; */
 }
 @keyframes imageslide {
   0% {

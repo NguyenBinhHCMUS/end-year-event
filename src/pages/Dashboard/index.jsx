@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 import "./dashboard.css";
 import { Modal, Button } from "react-bootstrap";
 import moonImg from "../../assets/img/moon.png";
@@ -10,14 +9,9 @@ import leftIcon from "../../assets/img/left_gh9ln8er1m6n_32 (1).png";
 import rightIcon from "../../assets/img/right_vi24vzlqsbfj_32.png";
 import adward2 from "../../assets/img/Picture1.png";
 import adward3 from "../../assets/img/Picture2.png";
+import TimerCountDown from "./component/TimerCountDown";
 
-const TIME_PLACE = {
-  date: "8:00 - 14:00 | Thứ hai, ngày 09/01/2023",
-};
-
-Dashboard.propTypes = {};
-
-function Dashboard(props) {
+function Dashboard() {
   const [showMenu, setShowMenu] = useState(false);
   const [step, setStep] = useState(1);
   const [show, setShow] = useState(false);
@@ -27,36 +21,6 @@ function Dashboard(props) {
   const [n1, setN1] = useState(0);
   const [n2, setN2] = useState(0);
   const [n3, setN3] = useState(0);
-  const [timerDays, setTimerDays] = useState("00");
-  const [timerHours, setTimerHours] = useState("00");
-  const [timerMinutes, setTimerMinutes] = useState("00");
-  const [timerSeconds, setTimerSeconds] = useState("00");
-
-  let interval = useRef();
-
-  const startTimer = () => {
-    const countDownDate = new Date("Jan 09, 2023 00:00:00").getTime();
-
-    interval = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = countDownDate - now;
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      if (distance < 0) {
-        clearInterval(interval.current);
-      } else {
-        setTimerDays(days < 10 ? `0${days}` : `${days}`);
-        setTimerHours(hours < 10 ? `0${hours}` : `${hours}`);
-        setTimerMinutes(minutes < 10 ? `0${minutes}` : `${minutes}`);
-        setTimerSeconds(seconds < 10 ? `0${seconds}` : `${seconds}`);
-      }
-    });
-  };
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
@@ -390,13 +354,6 @@ function Dashboard(props) {
     window.onload = loop;
   }, []);
 
-  useEffect(() => {
-    startTimer();
-    return () => {
-      clearInterval(interval.current);
-    };
-  });
-
   const Slide = () => {
     return (
       <div className="slide-container">
@@ -548,33 +505,7 @@ function Dashboard(props) {
           )}
         </div>
       </div>
-      <div className="left-info">
-        <div className="left-info-container">
-          <div className="left-info__time">
-            <div className="left-info__time-item left-info__time-item__content--border">
-              <div className="left-info__time-item__content">{timerDays}</div>
-              <div>Ngày</div>
-            </div>
-            <div className="left-info__time-item left-info__time-item__content--border">
-              <div className="left-info__time-item__content">{timerHours}</div>
-              <div>Giờ</div>
-            </div>
-            <div className="left-info__time-item left-info__time-item__content--border">
-              <div className="left-info__time-item__content">
-                {timerMinutes}
-              </div>
-              <div>Phút</div>
-            </div>
-            <div className="left-info__time-item ">
-              <div className="left-info__time-item__content">
-                {timerSeconds}
-              </div>
-              <div>Giây</div>
-            </div>
-          </div>
-          <div className="left-info__subcontent">{TIME_PLACE.date}</div>
-        </div>
-      </div>
+      <TimerCountDown />
       <div className="container">
         <div className="bgr-container">
           <div className="box-bgr">
