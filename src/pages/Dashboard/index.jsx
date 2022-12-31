@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./dashboard.css";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 import moonImg from "../../assets/img/moon.png";
 import logoImg from "../../assets/img/lgkhegr (1).png";
 import dateImg from "../../assets/img/date.png";
@@ -476,6 +476,18 @@ function Dashboard() {
           <button id="next" onClick={handleNextSlide}>
             <img src={rightIcon} alt="" />
           </button>
+        </div>
+        <div className="auto-slide">
+          <Form>
+            <Form.Check
+              type="switch"
+              id="custom-switch"
+              label="Tự động chuyển"
+              checked={slideAuto}
+              value={slideAuto}
+              onChange={() => setSlideAuto(!slideAuto)}
+            />
+          </Form>
         </div>
       </div>
     );

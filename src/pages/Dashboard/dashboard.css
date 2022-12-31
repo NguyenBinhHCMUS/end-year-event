@@ -632,6 +632,15 @@ section {
   opacity: 1;
 }
 
+.auto-slide {
+  padding-left: 10px;
+  position: absolute;
+  bottom: 1px;
+  /* width: 100%; */
+  text-align: center;
+  z-index: 3;
+}
+
 #slide {
   position: relative;
   width: 100%;
