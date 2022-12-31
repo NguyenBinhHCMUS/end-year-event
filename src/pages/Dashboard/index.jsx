@@ -1,20 +1,63 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./dashboard.css";
+import { Modal, Button } from "react-bootstrap";
 import moonImg from "../../assets/img/moon.png";
 import logoImg from "../../assets/img/lgkhegr (1).png";
 import dateImg from "../../assets/img/date.png";
-import macproImg from "../../assets/img/macbookpro14-16inch-1.jpg";
+import macproImg from "../../assets/img/macbook-pro-m2.png";
+import leftIcon from "../../assets/img/left_gh9ln8er1m6n_32 (1).png";
+import rightIcon from "../../assets/img/right_vi24vzlqsbfj_32.png";
+import adward2 from "../../assets/img/Picture1.png";
+import adward3 from "../../assets/img/Picture2.png";
 
 Dashboard.propTypes = {};
 
 function Dashboard(props) {
   const [showMenu, setShowMenu] = useState(false);
   const [step, setStep] = useState(1);
+  const [show, setShow] = useState(false);
+  const [startRandom, setStartRandom] = useState(false);
+  const [slideActive, setSlideActive] = useState(0);
+  const [slideAuto, setSlideAuto] = useState(true);
+  const [n1, setN1] = useState(0);
+  const [n2, setN2] = useState(0);
+  const [n3, setN3] = useState(0);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => {
+    setSlideAuto(false);
+    setShow(true);
+  };
+  const handleResetNumber = () => {
+    setStartRandom(false);
+    setN1(0);
+    setN2(0);
+    setN3(0);
+  };
+  const handlePrevSlide = () => {
+    const newSlideActive = slideActive === 0 ? 2 : slideActive - 1;
+    setSlideActive(newSlideActive);
+  };
+  const handleNextSlide = () => {
+    const newSlideActive = slideActive === 2 ? 0 : slideActive + 1;
+    setSlideActive(newSlideActive);
+  };
+
   const showToggleMenu = () => {
     const newShowMenu = !showMenu;
     setShowMenu(newShowMenu);
   };
+
+  useEffect(() => {
+    let timer = null;
+    if (slideAuto && step === 2)
+      timer = setTimeout(() => {
+        handleNextSlide();
+      }, 5000);
+    return () => clearTimeout(timer);
+  }, [step, slideActive, slideAuto]);
+
   useEffect(() => {
     // when animating on canvas, it is best to use requestAnimationFrame instead of setTimeout or setInterval
     // not supported in all browsers though and sometimes needs a prefix, so we need a shim
@@ -312,17 +355,144 @@ function Dashboard(props) {
     // once the window loads, we are ready for some fireworks!
     window.onload = loop;
   }, []);
+
+  const Slide = () => {
+    return (
+      <div className="slide-container">
+        <div id="slide">
+          <div className={`item ${slideActive === 0 && "slide-active"}`}>
+            <div className="image">
+              <img src={macproImg} />
+            </div>
+            <div className="content">
+              <div className="right">
+                <h2>GIẢI ĐẶC BIỆT</h2>
+                <ul>
+                  <li>
+                    <p>Tên sản phẩm</p>
+                    <p>Apple MacBook Air M1 256GB</p>
+                  </li>
+                  <li>
+                    <p>Năm sản xuất</p>
+                    <p>2020</p>
+                  </li>
+                </ul>
+
+                <hr />
+
+                <h2 className="mt-4">NGƯỜI MAY MẮN</h2>
+                <ul>
+                  <li>
+                    <p>Họ tên</p>
+                    <p>???</p>
+                  </li>
+                  <li>
+                    <p>Mã trúng thưởng</p>
+                    <p>???</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="user-info">
+              <Button variant="primary" onClick={handleShow}>
+                Tiến hành quay số
+              </Button>
+            </div>
+          </div>
+          <div className={`item ${slideActive === 1 && "slide-active"}`}>
+            <div className="image">
+              <img src={adward2} />
+            </div>
+            <div className="content">
+              <div className="right">
+                <h2>GIẢI HẤP DẪN</h2>
+                <ul>
+                  <li>
+                    <p>Tên sản phẩm</p>
+                    <p>Loa Bluetooth Marshall Tufton</p>
+                  </li>
+                </ul>
+
+                <hr />
+
+                <h2 className="mt-4">NGƯỜI MAY MẮN</h2>
+                <ul>
+                  <li>
+                    <p>Họ tên</p>
+                    <p>???</p>
+                  </li>
+                  <li>
+                    <p>Mã trúng thưởng</p>
+                    <p>???</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="user-info">
+              <Button type="button" variant="primary" onClick={handleShow}>
+                Tiến hành quay số
+              </Button>
+            </div>
+          </div>
+          <div className={`item ${slideActive === 2 && "slide-active"}`}>
+            <div className="image">
+              <img src={adward3} />
+            </div>
+            <div className="content">
+              <div className="right">
+                <h2>GIẢI MONG CHỜ</h2>
+                <ul>
+                  <li>
+                    <p>Tên sản phẩm</p>
+                    <p>Apple Watch</p>
+                    <p>Series 7 41mm GPS Viền Nhôm</p>
+                  </li>
+                </ul>
+
+                <hr />
+
+                <h2 className="mt-4">NGƯỜI MAY MẮN</h2>
+                <ul>
+                  <li>
+                    <p>Họ tên</p>
+                    <p>???</p>
+                  </li>
+                  <li>
+                    <p>Mã trúng thưởng</p>
+                    <p>???</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="user-info">
+              <Button variant="primary" onClick={handleShow}>
+                Tiến hành quay số
+              </Button>
+            </div>
+          </div>
+        </div>
+        <div className="directional">
+          <button id="prev" onClick={handlePrevSlide}>
+            <img src={leftIcon} alt="" />
+          </button>
+          <button id="next" onClick={handleNextSlide}>
+            <img src={rightIcon} alt="" />
+          </button>
+        </div>
+      </div>
+    );
+  };
   return (
     <>
-      <div className='container'>
-        <div className='bgr-container'>
-          <div className='box-bgr'>
-            <div className='moon'>
+      <div className="container">
+        <div className="bgr-container">
+          <div className="box-bgr">
+            <div className="moon">
               <button onClick={showToggleMenu}>
-                <img src={moonImg} alt='' />
+                <img src={moonImg} alt="" />
               </button>
               {!!showMenu && (
-                <ul className='menu'>
+                <ul className="menu">
                   <li
                     onClick={() => setStep(1)}
                     className={`menu-item ${step === 1 && "active"}`}
@@ -338,9 +508,9 @@ function Dashboard(props) {
                 </ul>
               )}
             </div>
-            <div className='box-text-noel'>
-              <div className='text-noel'>
-                <img src={logoImg} alt='' width={250} />
+            <div className="box-text-noel">
+              <div className="text-noel">
+                <img src={logoImg} alt="" width={250} />
               </div>
               <span></span>
             </div>
@@ -351,124 +521,148 @@ function Dashboard(props) {
         </div>
         {step === 2 && (
           <section>
-            <div className='box-santa'>
-              <div
-                className='row'
+            <div className="box-santa">
+              {/* <div
+                className="row"
                 style={{ position: "absolute", zIndex: "1" }}
               >
-                <div className='col-sm-4'>
-                  <div className='card'>
-                    <img src={macproImg} className='card-img-top' alt='...' />
-                    <div className='card-body'>
-                      <h5 className='card-title'>Giải mong chờ nhất</h5>
-                      <p className='card-text'>Macbook pro</p>
-                      <button
-                        type='button'
-                        class='btn btn-primary'
-                        data-bs-toggle='modal'
-                        data-bs-target='#exampleModal'
-                      >
-                        Quay số
-                      </button>
-                      <a href='#' className='btn btn-primary mx-2'>
+                <div className="col-sm-4">
+                  <div className="card">
+                    <img src={macproImg} className="card-img-top" alt="..." />
+                    <div className="card-body">
+                      <h5 className="card-title">Giải mong chờ nhất</h5>
+                      <p className="card-text">Macbook pro</p>
+                      <Button variant="primary" onClick={handleShow}>
+                        Launch demo modal
+                      </Button>
+                      <a href="#" className="btn btn-primary mx-2">
                         Kêt quả
                       </a>
                     </div>
                   </div>
                 </div>
-                <div className='col-sm-4'>
-                  <div className='card'>
-                    <img src='' className='card-img-top' alt='...' />
-                    <div className='card-body'>
-                      <h5 className='card-title'>Card title</h5>
-                      <p className='card-text'>
+                <div className="col-sm-4">
+                  <div className="card">
+                    <img src="" className="card-img-top" alt="..." />
+                    <div className="card-body">
+                      <h5 className="card-title">Card title</h5>
+                      <p className="card-text">
                         Some quick example text to build on the card title and
                         make up the bulk of the card's content.
                       </p>
-                      <a href='#' className='btn btn-primary'>
+                      <a href="#" className="btn btn-primary">
                         Go somewhere
                       </a>
                     </div>
                   </div>
                 </div>
-                <div className='col-sm-4'>
-                  <div className='card'>
-                    <img src='' className='card-img-top' alt='...' />
-                    <div className='card-body'>
-                      <h5 className='card-title'>Card title</h5>
-                      <p className='card-text'>
+                <div className="col-sm-4">
+                  <div className="card">
+                    <img src="" className="card-img-top" alt="..." />
+                    <div className="card-body">
+                      <h5 className="card-title">Card title</h5>
+                      <p className="card-text">
                         Some quick example text to build on the card title and
                         make up the bulk of the card's content.
                       </p>
-                      <a href='#' className='btn btn-primary'>
+                      <a href="#" className="btn btn-primary">
                         Go somewhere
                       </a>
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
+              <Slide />
             </div>
           </section>
         )}
         {step === 0 && (
           <section>
-            <div class='box-santa'>
-              <div class='santa-container'>
-                <div class='box-noel-gif'>
-                  <div class='noel-gif1'></div>
-                  <div class='noel-gift2'></div>
+            <div class="box-santa">
+              <div class="santa-container">
+                <div class="box-noel-gif">
+                  <div class="noel-gif1"></div>
+                  <div class="noel-gift2"></div>
                 </div>
-                <div class='box-gift'>
-                  <div class='gift-bottom'></div>
-                  <div class='gift-top'></div>
-                  <div class='box-fastener'>
-                    <div class='fastener1'></div>
-                    <div class='fastener2'></div>
+                <div class="box-gift">
+                  <div class="gift-bottom"></div>
+                  <div class="gift-top"></div>
+                  <div class="box-fastener">
+                    <div class="fastener1"></div>
+                    <div class="fastener2"></div>
                   </div>
-                  <div class='content'></div>
+                  <div class="content"></div>
                 </div>
               </div>
             </div>
           </section>
         )}
       </div>
-      <canvas id='canvas'> </canvas>
-      <div
-        class='modal fade'
-        id='exampleModal'
-        tabindex='-1'
-        aria-labelledby='exampleModalLabel'
-        aria-hidden='true'
+      <canvas id="canvas"> </canvas>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        // fullscreen
+        size="xl"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
       >
-        <div class='modal-dialog'>
-          <div class='modal-content'>
-            <div class='modal-header'>
-              <h5 class='modal-title' id='exampleModalLabel'>
-                Modal title
-              </h5>
-              <button
-                type='button'
-                class='btn-close'
-                data-bs-dismiss='modal'
-                aria-label='Close'
-              ></button>
+        <div style={{ background: "#00092f" }}>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <h2 className="text-center text-white w-100">
+                Mã số dự thưởng ?
+              </h2>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className={`wrapper-number ${startRandom && "start"}`}>
+              <div className="number-area">
+                <span className="num n1" data-attr="5741278934">
+                  {n1}
+                </span>
+              </div>
+              <div className="number-area">
+                <span className="num n2" data-attr="4785125986">
+                  {n2}
+                </span>
+              </div>
+              <div className="number-area">
+                <span className="num n3" data-attr="2478649812">
+                  {n3}
+                </span>
+              </div>
             </div>
-            <div class='modal-body'>...</div>
-            <div class='modal-footer'>
-              <button
-                type='button'
-                class='btn btn-secondary'
-                data-bs-dismiss='modal'
+
+            <div className="w-100 d-flex align-items-center justify-content-center">
+              <Button
+                variant="primary"
+                className="mx-2"
+                style={{ width: "100px" }}
+                onClick={() => setStartRandom(true)}
               >
-                Close
-              </button>
-              <button type='button' class='btn btn-primary'>
-                Save changes
-              </button>
+                Quay
+              </Button>
+              <Button
+                variant="success"
+                className="mx-2"
+                style={{ width: "100px" }}
+                onClick={() => handleResetNumber()}
+              >
+                Làm mới
+              </Button>
             </div>
-          </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Đóng
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              Lưu
+            </Button>
+          </Modal.Footer>
         </div>
-      </div>
+      </Modal>
     </>
   );
 }
