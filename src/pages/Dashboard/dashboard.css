@@ -102,7 +102,11 @@ body {
 .box-bgr .box-text-noel .text-noel {
   position: relative;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+
 @keyframes textnoel {
   0% {
     transform: translate(-50%, -400px);
@@ -141,10 +145,10 @@ body {
   width: 200px;
   position: relative;
   top: 12px;
-  left: 50%;
+  /* left: 50%;
   transform: translate(-50%, 0);
   animation: textnoel 3s ease-in-out forwards;
-  transition: transform 1s;
+  transition: transform 1s; */
 }
 
 @media only screen and (max-width: 600px) {

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 const TIME_PLACE = {
-  date: "8:00 - 14:00 | Thứ hai, ngày 09/01/2023",
+  date: "18:00 - 22:00 | Thứ hai, ngày 09.01.2023",
 };
 
 TimerCountDown.propTypes = {};
@@ -12,29 +12,6 @@ function TimerCountDown(props) {
   const [timerSeconds, setTimerSeconds] = useState("00");
 
   let interval = useRef();
-
-  // const startTimer = () => {
-  //   const countDownDate = new Date("Jan 09, 2023 00:00:00").getTime();
-
-  //   interval = setInterval(() => {
-  //     const now = new Date().getTime();
-  //     const distance = countDownDate - now;
-  //     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  //     const hours = Math.floor(
-  //       (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  //     );
-  //     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  //     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  //     if (distance < 0) {
-  //       clearInterval(interval.current);
-  //     } else {
-  //       setTimerDays(days < 10 ? `0${days}` : `${days}`);
-  //       setTimerHours(hours < 10 ? `0${hours}` : `${hours}`);
-  //       setTimerMinutes(minutes < 10 ? `0${minutes}` : `${minutes}`);
-  //       setTimerSeconds(seconds < 10 ? `0${seconds}` : `${seconds}`);
-  //     }
-  //   });
 
   useEffect(() => {
     const countDownDate = new Date("Jan 09, 2023 00:00:00").getTime();

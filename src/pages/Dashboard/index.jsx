@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./dashboard.css";
 import { Modal, Button, Form } from "react-bootstrap";
+import axios from "axios";
 import moonImg from "../../assets/img/moon.png";
 import logoImg from "../../assets/img/lgkhegr (1).png";
+import logo2Img from "../../assets/img/LOGO KHE-01.png";
+import logo3Img from "../../assets/img/lgDK.png";
+import logo4Img from "../../assets/img/LGDORI.png";
 import dateImg from "../../assets/img/date.png";
 import macproImg from "../../assets/img/macbook-pro-m2.png";
 import leftIcon from "../../assets/img/left_gh9ln8er1m6n_32 (1).png";
@@ -21,11 +25,13 @@ function Dashboard() {
   const [n1, setN1] = useState(0);
   const [n2, setN2] = useState(0);
   const [n3, setN3] = useState(0);
+  const [adwardSelected, setAdwardSelected] = useState(0);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => {
+  const handleShow = (idAdward) => {
     setSlideAuto(false);
     setShow(true);
+    setAdwardSelected(idAdward);
   };
   const handleResetNumber = () => {
     setStartRandom(false);
@@ -45,6 +51,18 @@ function Dashboard() {
   const showToggleMenu = () => {
     const newShowMenu = !showMenu;
     setShowMenu(newShowMenu);
+  };
+
+  const handleRandomNumber = async () => {
+    if (adwardSelected) {
+      setStartRandom(true);
+
+      const response = axios.get(
+        `https://dd81-115-77-79-25.ap.ngrok.io/Participant/GetInfoRewardRecipients/${adwardSelected}`,
+        { withCredentials: true }
+      );
+      console.log(response);
+    }
   };
 
   useEffect(() => {
@@ -86,14 +104,13 @@ function Dashboard() {
       limiterTotal = 5,
       limiterTick = 0,
       // this will time the auto launches of fireworks, one launch per 80 loop ticks
-      timerTotal = 80,
+      timerTotal = 40,
       timerTick = 0,
       mousedown = false,
       // mouse x coordinate,
       mx,
       // mouse y coordinate
       my;
-    console.log(canvas);
 
     // set canvas dimensions
     canvas.width = cw;
@@ -392,7 +409,7 @@ function Dashboard() {
               </div>
             </div>
             <div className="user-info">
-              <Button variant="primary" onClick={handleShow}>
+              <Button variant="primary" onClick={() => handleShow(1)}>
                 Tiến hành quay số
               </Button>
             </div>
@@ -523,9 +540,11 @@ function Dashboard() {
           <div className="box-bgr">
             <div className="box-text-noel">
               <div className="text-noel">
-                <img src={logoImg} alt="" width={250} />
+                <img loading="lazy" src={logoImg} alt="" width={250} />
+                <img loading="lazy" src={logo2Img} alt="" width={250} />
+                <img loading="lazy" src={logo3Img} alt="" width={250} />
+                <img loading="lazy" src={logo4Img} alt="" width={250} />
               </div>
-              <span></span>
             </div>
             {/* <div className='house'>
               <img src={dateImg} alt='' />
@@ -602,7 +621,7 @@ function Dashboard() {
                 variant="primary"
                 className="mx-2"
                 style={{ width: "100px" }}
-                onClick={() => setStartRandom(true)}
+                onClick={handleRandomNumber}
               >
                 Quay
               </Button>
