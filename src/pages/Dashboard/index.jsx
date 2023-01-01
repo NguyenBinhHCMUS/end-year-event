@@ -1,78 +1,83 @@
 import React, { useEffect, useState } from "react";
 import "./dashboard.css";
-import { Modal, Button, Form } from "react-bootstrap";
+import {
+  Modal,
+  Button,
+  Form,
+  InputGroup,
+  Alert,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
 import axios from "axios";
-import moonImg from "../../assets/img/moon.png";
+import backgoundImg from "../../assets/img/tree.png";
 import logoImg from "../../assets/img/lgkhegr (1).png";
 import logo2Img from "../../assets/img/LOGO KHE-01.png";
 import logo3Img from "../../assets/img/lgDK.png";
 import logo4Img from "../../assets/img/LGDORI.png";
-import dateImg from "../../assets/img/date.png";
-import macproImg from "../../assets/img/macbook-pro-m2.png";
-import leftIcon from "../../assets/img/left_gh9ln8er1m6n_32 (1).png";
-import rightIcon from "../../assets/img/right_vi24vzlqsbfj_32.png";
-import adward2 from "../../assets/img/Picture1.png";
-import adward3 from "../../assets/img/Picture2.png";
-import TimerCountDown from "./component/TimerCountDown";
+import dateImg from "../../assets/img/logo-removebg-preview.png";
+import card from "../../assets/img/thiep.png";
 
 function Dashboard() {
-  const [showMenu, setShowMenu] = useState(false);
-  const [step, setStep] = useState(1);
   const [show, setShow] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
   const [startRandom, setStartRandom] = useState(false);
-  const [slideActive, setSlideActive] = useState(0);
-  const [slideAuto, setSlideAuto] = useState(true);
   const [n1, setN1] = useState(0);
   const [n2, setN2] = useState(0);
   const [n3, setN3] = useState(0);
-  const [adwardSelected, setAdwardSelected] = useState(0);
+  const [code, setCode] = useState();
+  const [infoParticipant, setInfoParticipant] = useState();
 
   const handleClose = () => setShow(false);
-  const handleShow = (idAdward) => {
-    setSlideAuto(false);
-    setShow(true);
-    setAdwardSelected(idAdward);
-  };
-  const handleResetNumber = () => {
-    setStartRandom(false);
-    setN1(0);
-    setN2(0);
-    setN3(0);
-  };
-  const handlePrevSlide = () => {
-    const newSlideActive = slideActive === 0 ? 2 : slideActive - 1;
-    setSlideActive(newSlideActive);
-  };
-  const handleNextSlide = () => {
-    const newSlideActive = slideActive === 2 ? 0 : slideActive + 1;
-    setSlideActive(newSlideActive);
-  };
+  const handleCloseInfo = () => setShowInfo(false);
 
-  const showToggleMenu = () => {
-    const newShowMenu = !showMenu;
-    setShowMenu(newShowMenu);
-  };
-
-  const handleRandomNumber = async () => {
-    if (adwardSelected) {
-      setStartRandom(true);
-
-      const response = axios.get(
-        `https://dd81-115-77-79-25.ap.ngrok.io/Participant/GetInfoRewardRecipients/${adwardSelected}`,
-        { withCredentials: true }
-      );
-      console.log(response);
+  const handleGetInfoByCode = async () => {
+    try {
+      if (code) {
+        setShow(false);
+        const response = await axios.get(
+          `https://dd81-115-77-79-25.ap.ngrok.io/Participant/GetParticipantByCode?Code=${code}`,
+          { withCredentials: true }
+        );
+        if (response.data?.data) {
+          const { data } = response.data;
+          setInfoParticipant(data);
+          setShowInfo(true);
+          localStorage.setItem("info", JSON.stringify(data));
+        } else {
+          <Alert variant="danger">
+            Xin lỗi chúng tôi không tìm thấy thông tin của bạn!
+          </Alert>;
+        }
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
+  const handleCheckAgain = () => {
+    setShowInfo(false);
+    setShow(true);
+  };
+
+  const handleCheck = () => {
+    if (infoParticipant) setShowInfo(true);
+  };
+
   useEffect(() => {
-    let timer = null;
-    if (slideAuto && step === 2)
-      timer = setTimeout(() => {
-        handleNextSlide();
-      }, 5000);
-    return () => clearTimeout(timer);
-  }, [step, slideActive, slideAuto]);
+    const codeSave = JSON.parse(localStorage.getItem("code"));
+    if (codeSave) setInfoParticipant(codeSave);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (infoParticipant === null) setShow(true);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [infoParticipant]);
 
   useEffect(() => {
     // when animating on canvas, it is best to use requestAnimationFrame instead of setTimeout or setInterval
@@ -371,214 +376,57 @@ function Dashboard() {
     window.onload = loop;
   }, []);
 
-  const Slide = () => {
-    return (
-      <div className="slide-container">
-        <div id="slide">
-          <div className={`item ${slideActive === 0 && "slide-active"}`}>
-            <div className="image">
-              <img loading="lazy" src={macproImg} />
-            </div>
-            <div className="content">
-              <div className="right">
-                <h2>GIẢI ĐẶC BIỆT</h2>
-                <ul>
-                  <li>
-                    <p>Tên sản phẩm</p>
-                    <p>Apple MacBook Air M1 256GB</p>
-                  </li>
-                  <li>
-                    <p>Năm sản xuất</p>
-                    <p>2020</p>
-                  </li>
-                </ul>
-
-                <hr />
-
-                <h2 className="mt-4">NGƯỜI MAY MẮN</h2>
-                <ul>
-                  <li>
-                    <p>Họ tên</p>
-                    <p>???</p>
-                  </li>
-                  <li>
-                    <p>Mã trúng thưởng</p>
-                    <p>???</p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="user-info">
-              <Button variant="primary" onClick={() => handleShow(1)}>
-                Tiến hành quay số
-              </Button>
-            </div>
-          </div>
-          <div className={`item ${slideActive === 1 && "slide-active"}`}>
-            <div className="image">
-              <img loading="lazy" src={adward2} />
-            </div>
-            <div className="content">
-              <div className="right">
-                <h2>GIẢI HẤP DẪN</h2>
-                <ul>
-                  <li>
-                    <p>Tên sản phẩm</p>
-                    <p>Loa Bluetooth Marshall Tufton</p>
-                  </li>
-                </ul>
-
-                <hr />
-
-                <h2 className="mt-4">NGƯỜI MAY MẮN</h2>
-                <ul>
-                  <li>
-                    <p>Họ tên</p>
-                    <p>???</p>
-                  </li>
-                  <li>
-                    <p>Mã trúng thưởng</p>
-                    <p>???</p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="user-info">
-              <Button type="button" variant="primary" onClick={handleShow}>
-                Tiến hành quay số
-              </Button>
-            </div>
-          </div>
-          <div className={`item ${slideActive === 2 && "slide-active"}`}>
-            <div className="image">
-              <img loading="lazy" src={adward3} />
-            </div>
-            <div className="content">
-              <div className="right">
-                <h2>GIẢI MONG CHỜ</h2>
-                <ul>
-                  <li>
-                    <p>Tên sản phẩm</p>
-                    <p>Apple Watch</p>
-                    <p>Series 7 41mm GPS Viền Nhôm</p>
-                  </li>
-                </ul>
-
-                <hr />
-
-                <h2 className="mt-4">NGƯỜI MAY MẮN</h2>
-                <ul>
-                  <li>
-                    <p>Họ tên</p>
-                    <p>???</p>
-                  </li>
-                  <li>
-                    <p>Mã trúng thưởng</p>
-                    <p>???</p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="user-info">
-              <Button variant="primary" onClick={handleShow}>
-                Tiến hành quay số
-              </Button>
-            </div>
-          </div>
-        </div>
-        <div className="directional">
-          <button id="prev" onClick={handlePrevSlide}>
-            <img src={leftIcon} alt="" />
-          </button>
-          <button id="next" onClick={handleNextSlide}>
-            <img src={rightIcon} alt="" />
-          </button>
-        </div>
-        <div className="auto-slide">
-          <Form>
-            <Form.Check
-              type="switch"
-              id="custom-switch"
-              label="Tự động chuyển"
-              checked={slideAuto}
-              value={slideAuto}
-              onChange={() => setSlideAuto(!slideAuto)}
-            />
-          </Form>
-        </div>
-      </div>
-    );
-  };
   return (
     <>
-      <div className="menu-wrapper">
-        <div className="moon">
-          <button onClick={showToggleMenu}>
-            <img src={moonImg} alt="" />
-          </button>
-          {!!showMenu && (
-            <ul className="menu">
-              <li
-                onClick={() => setStep(1)}
-                className={`menu-item ${step === 1 && "active"}`}
-              >
-                Trang chờ
-              </li>
-              <li
-                onClick={() => setStep(2)}
-                className={`menu-item ${step === 2 && "active"}`}
-              >
-                Quay số
-              </li>
-            </ul>
-          )}
+      <div className="backgound-image">
+        <img src={backgoundImg} alt="" />
+      </div>
+      <div className="check-image">
+        <button onClick={handleCheck}>
+          <img src={card} alt="" />
+        </button>
+      </div>
+      <div className="info">
+        <div className="info-container">
+          <div className="house">
+            <img src={dateImg} alt="" />
+          </div>
+          {/* <TimerCountDown /> */}
+          <div className="info-content">
+            <h1>CÁM ƠN BẠN ĐÃ ĐẾN!</h1>
+            <hr />
+            <p className="info-content__thanks">
+              Công ty Khè Group chân thành cám ơn những đóng góp to lớn của bạn
+              cho chúng tôi.
+            </p>
+            <div className="info-content__address">
+              <div className="info-content__address__left">
+                <h2>18:00 - 22:00</h2>
+                <p>
+                  Dresscode: BLACK & SILVER SHIMMER <br /> (Đen & Bạc láp lánh)
+                </p>
+              </div>
+              <div className="info-content__address__right">
+                <h2>THE BAO MANSION</h2>
+                <p>755 Nguyễn Duy Trinh, P. Phú Hữu, TP Thủ Đức</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <TimerCountDown />
       <div className="container">
         <div className="bgr-container">
           <div className="box-bgr">
             <div className="box-text-noel">
               <div className="text-noel">
-                <img loading="lazy" src={logoImg} alt="" width={250} />
-                <img loading="lazy" src={logo2Img} alt="" width={250} />
-                <img loading="lazy" src={logo3Img} alt="" width={250} />
-                <img loading="lazy" src={logo4Img} alt="" width={250} />
+                <img loading="lazy" src={logoImg} alt="" />
+                <img loading="lazy" src={logo2Img} alt="" />
+                <img loading="lazy" src={logo3Img} alt="" />
+                <img loading="lazy" src={logo4Img} alt="" />
               </div>
             </div>
-            {/* <div className='house'>
-              <img src={dateImg} alt='' />
-            </div> */}
           </div>
         </div>
-        {step === 2 && (
-          <section>
-            <div className="box-santa">
-              <Slide />
-            </div>
-          </section>
-        )}
-        {step === 0 && (
-          <section>
-            <div class="box-santa">
-              <div class="santa-container">
-                <div class="box-noel-gif">
-                  <div class="noel-gif1"></div>
-                  <div class="noel-gift2"></div>
-                </div>
-                <div class="box-gift">
-                  <div class="gift-bottom"></div>
-                  <div class="gift-top"></div>
-                  <div class="box-fastener">
-                    <div class="fastener1"></div>
-                    <div class="fastener2"></div>
-                  </div>
-                  <div class="content"></div>
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
       </div>
       <canvas id="canvas"> </canvas>
       <Modal
@@ -592,55 +440,66 @@ function Dashboard() {
         <div style={{ background: "#00092f" }}>
           <Modal.Header closeButton>
             <Modal.Title>
-              <h2 className="text-center text-white w-100">
-                Mã số dự thưởng ?
-              </h2>
+              <h2 className="text-center text-white w-100">Xác nhận tham dự</h2>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className={`wrapper-number ${startRandom && "start"}`}>
-              <div className="number-area">
-                <span className="num n1" data-attr="5741278934">
-                  {n1}
-                </span>
-              </div>
-              <div className="number-area">
-                <span className="num n2" data-attr="4785125986">
-                  {n2}
-                </span>
-              </div>
-              <div className="number-area">
-                <span className="num n3" data-attr="2478649812">
-                  {n3}
-                </span>
-              </div>
-            </div>
-
-            <div className="w-100 d-flex align-items-center justify-content-center">
+            <InputGroup className="my-2">
+              <Form.Control
+                placeholder="Mã dự thưởng"
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+                onChange={(e) => setCode(e.target.value)}
+              />
               <Button
                 variant="primary"
-                className="mx-2"
-                style={{ width: "100px" }}
-                onClick={handleRandomNumber}
+                id="button-addon2"
+                onClick={handleGetInfoByCode}
               >
-                Quay
+                Kiểm tra
               </Button>
-              <Button
-                variant="success"
-                className="mx-2"
-                style={{ width: "100px" }}
-                onClick={() => handleResetNumber()}
-              >
-                Làm mới
-              </Button>
-            </div>
+            </InputGroup>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
               Đóng
             </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Lưu
+          </Modal.Footer>
+        </div>
+      </Modal>
+      <Modal
+        show={showInfo}
+        onHide={handleCloseInfo}
+        size="xl"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <div style={{ background: "#00092f" }}>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <h2 className="text-center text-white w-100">
+                Thông tin khách mời
+              </h2>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Container>
+              <Row>
+                <Col className="text-white">Họ tên: </Col>
+                <Col className="text-white">{infoParticipant?.userName}</Col>
+              </Row>
+              <Row>
+                <Col className="text-white">Mã số trúng thưởng: </Col>
+                <Col style={{ color: "#f2d377" }}>{infoParticipant?.code}</Col>
+              </Row>
+            </Container>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseInfo}>
+              Đóng
+            </Button>
+            <Button variant="primary" onClick={handleCheckAgain}>
+              Thử lại
             </Button>
           </Modal.Footer>
         </div>
