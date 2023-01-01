@@ -63,6 +63,7 @@ function Dashboard() {
 
   const handleCheck = () => {
     if (infoParticipant) setShowInfo(true);
+    else setShow(true);
   };
 
   useEffect(() => {
