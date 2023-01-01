@@ -382,7 +382,7 @@ function Dashboard() {
         <img src={backgoundImg} alt="" />
       </div>
       <div className="check-image">
-        <button onClick={handleCheck}>
+        <button style={{ border: "none" }} onClick={handleCheck}>
           <img src={card} alt="" />
         </button>
       </div>
