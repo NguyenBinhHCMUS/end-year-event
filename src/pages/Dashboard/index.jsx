@@ -380,7 +380,7 @@ function Dashboard() {
   return (
     <>
       <div className="backgound-image">
-        <img src={backgoundImg} alt="" />
+        <img loading="lazy" src={backgoundImg} alt="" />
       </div>
       <div className="check-image">
         <button style={{ border: "none" }} onClick={handleCheck}>
