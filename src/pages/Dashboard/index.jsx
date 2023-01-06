@@ -18,6 +18,7 @@ import logo3Img from "../../assets/img/lgDK.png";
 import logo4Img from "../../assets/img/LGDORI.png";
 import dateImg from "../../assets/img/logo-removebg-preview.png";
 import card from "../../assets/img/thiep.png";
+import Slide from "./component/Slide";
 
 function Dashboard() {
   const [show, setShow] = useState(false);
@@ -379,9 +380,14 @@ function Dashboard() {
 
   return (
     <>
-      <div className="backgound-image">
-        <img loading="lazy" src={backgoundImg} alt="" />
-      </div>
+      <header>
+        <div className="logo">
+          <img loading="lazy" src={logoImg} alt="" />
+          <img loading="lazy" src={logo2Img} alt="" />
+          <img loading="lazy" src={logo3Img} alt="" />
+          <img loading="lazy" src={logo4Img} alt="" />
+        </div>
+      </header>
       <div className="check-image">
         <button style={{ border: "none" }} onClick={handleCheck}>
           <img src={card} alt="" />
@@ -389,7 +395,8 @@ function Dashboard() {
       </div>
       <div className="info">
         <div className="info-container">
-          <div className="house">
+          <Slide />
+          <div className="house mt-4">
             <img src={dateImg} alt="" />
           </div>
           {/* <TimerCountDown /> */}
@@ -415,20 +422,10 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="container">
-        <div className="bgr-container">
-          <div className="box-bgr">
-            <div className="box-text-noel">
-              <div className="text-noel">
-                <img loading="lazy" src={logoImg} alt="" />
-                <img loading="lazy" src={logo2Img} alt="" />
-                <img loading="lazy" src={logo3Img} alt="" />
-                <img loading="lazy" src={logo4Img} alt="" />
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="backgound-image">
+        <img loading="lazy" src={backgoundImg} alt="" />
       </div>
+
       <canvas id="canvas"> </canvas>
       <Modal
         show={show}
