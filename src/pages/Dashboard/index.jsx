@@ -19,8 +19,12 @@ import logo4Img from "../../assets/img/LGDORI.png";
 import dateImg from "../../assets/img/logo-removebg-preview.png";
 import card from "../../assets/img/thiep.png";
 import Slide from "./component/Slide";
+import BottomNav from "./component/BottomNav";
+import Stepper from "./component/Stepper";
+import MenuCard from "./component/MenuCard";
 
 function Dashboard() {
+  const [navigator, setNavigator] = useState("home");
   const [show, setShow] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [startRandom, setStartRandom] = useState(false);
@@ -30,6 +34,10 @@ function Dashboard() {
   const [code, setCode] = useState();
   const [infoParticipant, setInfoParticipant] = useState();
 
+  const handleNavigator = (target) => {
+    setNavigator(target);
+  };
+
   const handleClose = () => setShow(false);
   const handleCloseInfo = () => setShowInfo(false);
 
@@ -38,7 +46,7 @@ function Dashboard() {
       if (code) {
         setShow(false);
         const response = await axios.get(
-          `https://dd81-115-77-79-25.ap.ngrok.io/Participant/GetParticipantByCode?Code=${code}`,
+          `https://b0ae-171-248-107-217.ap.ngrok.io/Participant/GetParticipantByCode?Code=${code}`,
           { withCredentials: true }
         );
         if (response.data?.data) {
@@ -388,43 +396,62 @@ function Dashboard() {
           <img loading="lazy" src={logo4Img} alt="" />
         </div>
       </header>
+      {navigator === "home" && (
+        <div className="info">
+          <div className="info-container">
+            <div className="house mt-4">
+              <img src={dateImg} alt="" />
+            </div>
+            {/* <TimerCountDown /> */}
+            <div className="info-content">
+              <h1>CÁM ƠN BẠN ĐÃ ĐẾN!</h1>
+              <hr />
+              <p className="info-content__thanks">
+                Công ty Khè Group chân thành cám ơn những đóng góp to lớn của
+                bạn cho chúng tôi.
+              </p>
+              <div className="info-content__address">
+                <div className="info-content__address__left">
+                  <h3>18:00 - 22:00</h3>
+                  <p>
+                    Dresscode: BLACK & SILVER SHIMMER <br /> (Đen & Bạc láp
+                    lánh)
+                  </p>
+                </div>
+                <div className="info-content__address__right">
+                  <h3>THE BAO MANSION</h3>
+                  <p>755 Nguyễn Duy Trinh, P. Phú Hữu, TP Thủ Đức</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {navigator === "timeline" && (
+        <div className="timeline-container">
+          <Stepper />
+        </div>
+      )}
+
+      {navigator === "menu" && (
+        <div className="menu-container">
+          <MenuCard />
+        </div>
+      )}
+      {navigator === "luckydraw" && <Slide />}
       <div className="check-image">
         <button style={{ border: "none" }} onClick={handleCheck}>
           <img src={card} alt="" />
         </button>
       </div>
-      <div className="info">
-        <div className="info-container">
-          <Slide />
-          <div className="house mt-4">
-            <img src={dateImg} alt="" />
-          </div>
-          {/* <TimerCountDown /> */}
-          <div className="info-content">
-            <h1>CÁM ƠN BẠN ĐÃ ĐẾN!</h1>
-            <hr />
-            <p className="info-content__thanks">
-              Công ty Khè Group chân thành cám ơn những đóng góp to lớn của bạn
-              cho chúng tôi.
-            </p>
-            <div className="info-content__address">
-              <div className="info-content__address__left">
-                <h2>18:00 - 22:00</h2>
-                <p>
-                  Dresscode: BLACK & SILVER SHIMMER <br /> (Đen & Bạc láp lánh)
-                </p>
-              </div>
-              <div className="info-content__address__right">
-                <h2>THE BAO MANSION</h2>
-                <p>755 Nguyễn Duy Trinh, P. Phú Hữu, TP Thủ Đức</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
       <div className="backgound-image">
         <img loading="lazy" src={backgoundImg} alt="" />
       </div>
+
+      <footer>
+        <BottomNav onSubmit={handleNavigator} />
+      </footer>
 
       <canvas id="canvas"> </canvas>
       <Modal
