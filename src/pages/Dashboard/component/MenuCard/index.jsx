@@ -1,6 +1,6 @@
 import React from "react";
 import "./menucard.css";
-import logoImg from "../../../../assets/img/lgkhegr (1).png";
+import logoImg from "../../../../assets/img/lgkhegr (1).webp";
 
 function MenuCard(props) {
   return (

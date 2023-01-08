@@ -13,7 +13,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 import backgoundImg from "../../assets/img/tree.png";
-import logoImg from "../../assets/img/lgkhegr (1).png";
+import logoImg from "../../assets/img/lgkhegr (1).webp";
 import logo2Img from "../../assets/img/LOGO KHE-01.png";
 import logo3Img from "../../assets/img/lgDK.png";
 import logo4Img from "../../assets/img/LGDORI.png";
