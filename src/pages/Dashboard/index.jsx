@@ -404,7 +404,7 @@ function Dashboard() {
             </div>
             {/* <TimerCountDown /> */}
             <div className="info-content">
-              <h1>CÁM ƠN BẠN ĐÃ ĐẾN!</h1>
+              <h1 className="info-content-title">CÁM ƠN BẠN ĐÃ ĐẾN!</h1>
               <hr />
               <p className="info-content__thanks">
                 Công ty Khè Group chân thành cám ơn những đóng góp to lớn của
