@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import macproImg from "../../../assets/img/macbook-pro-m2.png";
 import adward2 from "../../../assets/img/Picture1.png";
 import adward3 from "../../../assets/img/Picture2.png";
@@ -40,6 +40,11 @@ function Slide(props) {
           <p style={{ padding: "0 12px", textAlign: "center" }}>
             Apple MacBook Air M1 256GB
           </p>
+          <div className="user-info">
+            <Button type="button" variant="primary">
+              Tiến hành quay số
+            </Button>
+          </div>
         </div>
         <div className={`item ${slideActive === 1 && "slide-active"}`}>
           <h2 className="slide-item__title">01 GIẢI HẤP DẪN</h2>
@@ -51,6 +56,11 @@ function Slide(props) {
           <p style={{ padding: "0 12px", textAlign: "center" }}>
             Loa Bluetooth Marshall Tufton
           </p>
+          <div className="user-info">
+            <Button type="button" variant="primary">
+              Tiến hành quay số
+            </Button>
+          </div>
         </div>
         <div className={`item ${slideActive === 2 && "slide-active"}`}>
           <h2 className="slide-item__title">01 GIẢI MONG CHỜ</h2>
@@ -62,6 +72,11 @@ function Slide(props) {
           <p style={{ padding: "0 12px", textAlign: "center" }}>
             Apple Watch Series 7 41mm GPS Viền Nhôm
           </p>
+          <div className="user-info">
+            <Button type="button" variant="primary">
+              Tiến hành quay số
+            </Button>
+          </div>
         </div>
       </div>
       <div className="directional">

@@ -220,11 +220,25 @@
     transform: translate(0, 0);
   }
 }
+.user-info {
+  display: none;
+}
 
 @media only screen and (min-width: 601px) {
   .slide-container {
     width: 1440px;
     height: 900px;
     margin: 0 auto;
+  }
+  .user-info {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  .user-info button {
+    margin-top: 20px;
+    width: 300px;
+    height: 60px;
+    font-size: 24px;
   }
 }
