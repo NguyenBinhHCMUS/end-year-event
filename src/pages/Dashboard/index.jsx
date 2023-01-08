@@ -446,7 +446,7 @@ function Dashboard() {
       </div>
 
       <div className="backgound-image">
-        <img loading="lazy" src={backgoundImg} alt="" />
+        {/* <img loading="lazy" src={backgoundImg} alt="" /> */}
       </div>
 
       <footer>
