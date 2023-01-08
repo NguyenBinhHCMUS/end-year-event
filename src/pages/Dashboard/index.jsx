@@ -26,6 +26,7 @@ import MenuCard from "./component/MenuCard";
 function Dashboard() {
   const [navigator, setNavigator] = useState("home");
   const [show, setShow] = useState(false);
+  const [showRandom, setShowRandom] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [startRandom, setStartRandom] = useState(false);
   const [n1, setN1] = useState(0);
@@ -33,13 +34,34 @@ function Dashboard() {
   const [n3, setN3] = useState(0);
   const [code, setCode] = useState();
   const [infoParticipant, setInfoParticipant] = useState();
+  const [adwardSelected, setAdwardSelected] = useState();
 
   const handleNavigator = (target) => {
     setNavigator(target);
   };
 
   const handleClose = () => setShow(false);
+  const handleCloseRandom = () => setShowRandom(false);
   const handleCloseInfo = () => setShowInfo(false);
+
+  const handleResetNumber = () => {
+    setStartRandom(false);
+    setN1(0);
+    setN2(0);
+    setN3(0);
+  };
+
+  const handleRandomNumber = async () => {
+    if (adwardSelected) {
+      setStartRandom(true);
+
+      const response = axios.get(
+        `https://dd81-115-77-79-25.ap.ngrok.io/Participant/GetInfoRewardRecipients/${adwardSelected}`,
+        { withCredentials: true }
+      );
+      console.log(response);
+    }
+  };
 
   const handleGetInfoByCode = async () => {
     try {
@@ -75,8 +97,9 @@ function Dashboard() {
     else setShow(true);
   };
 
-  const handleRandomNumber = async (idAdward) => {
-    setShow(true);
+  const handleRandomNumberSlide = (idAdward) => {
+    setShowRandom(true);
+    setAdwardSelected(idAdward);
 
     // try {
     //   if (idAdward) {
@@ -468,7 +491,9 @@ function Dashboard() {
           <MenuCard />
         </div>
       )}
-      {navigator === "luckydraw" && <Slide onSubmit={handleRandomNumber} />}
+      {navigator === "luckydraw" && (
+        <Slide onSubmit={handleRandomNumberSlide} />
+      )}
       {/* <div className="check-image">
         <button style={{ border: "none" }} onClick={handleCheck}>
           <img src={card} alt="" />
@@ -555,6 +580,70 @@ function Dashboard() {
             </Button>
             <Button variant="primary" onClick={handleCheckAgain}>
               Thử lại
+            </Button>
+          </Modal.Footer>
+        </div>
+      </Modal>
+      <Modal
+        show={showRandom}
+        onHide={handleCloseRandom}
+        // fullscreen
+        size="xl"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <div style={{ background: "#00092f" }}>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <h2 className="text-center text-white w-100">
+                Mã số dự thưởng ?
+              </h2>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className={`wrapper-number ${startRandom && "start"}`}>
+              <div className="number-area">
+                <span className="num n1" data-attr="5741278934">
+                  {n1}
+                </span>
+              </div>
+              <div className="number-area">
+                <span className="num n2" data-attr="4785125986">
+                  {n2}
+                </span>
+              </div>
+              <div className="number-area">
+                <span className="num n3" data-attr="2478649812">
+                  {n3}
+                </span>
+              </div>
+            </div>
+
+            <div className="w-100 d-flex align-items-center justify-content-center">
+              <Button
+                variant="primary"
+                className="mx-2"
+                style={{ width: "100px" }}
+                onClick={handleRandomNumber}
+              >
+                Quay
+              </Button>
+              <Button
+                variant="success"
+                className="mx-2"
+                style={{ width: "100px" }}
+                onClick={() => handleResetNumber()}
+              >
+                Làm mới
+              </Button>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Đóng
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              Lưu
             </Button>
           </Modal.Footer>
         </div>
