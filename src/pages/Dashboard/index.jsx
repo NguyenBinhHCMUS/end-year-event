@@ -41,7 +41,10 @@ function Dashboard() {
   };
 
   const handleClose = () => setShow(false);
-  const handleCloseRandom = () => setShowRandom(false);
+  const handleCloseRandom = () => {
+    setShowRandom(false);
+    setStartRandom(false);
+  };
   const handleCloseInfo = () => setShowInfo(false);
 
   const handleResetNumber = () => {
@@ -639,10 +642,10 @@ function Dashboard() {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <Button variant="secondary" onClick={handleCloseRandom}>
               Đóng
             </Button>
-            <Button variant="primary" onClick={handleClose}>
+            <Button variant="primary" onClick={handleCloseRandom}>
               Lưu
             </Button>
           </Modal.Footer>
