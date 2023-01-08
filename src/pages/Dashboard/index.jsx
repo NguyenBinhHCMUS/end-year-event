@@ -76,31 +76,33 @@ function Dashboard() {
   };
 
   const handleRandomNumber = async (idAdward) => {
-    try {
-      if (idAdward) {
-        const response = await axios.get(
-          `https://b0ae-171-248-107-217.ap.ngrok.io/Participant/GetInfoRewardRecipients/${idAdward}`,
-          { withCredentials: true }
-        );
-        if (response.data?.data) {
-          const { data } = response.data;
-          const n1 = data[0];
-          const n2 = data[1];
-          const n3 = data[2];
-          setN1(data[0]);
-          setN2(data[1]);
-          setN3(data[2]);
-          setShow(true);
+    setShow(true);
 
-          // setInfoParticipant(data);
-          // setShowInfo(true);
-        } else {
-          <Alert variant="danger">Có lỗi vấn đề đường truyền!</Alert>;
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   if (idAdward) {
+    //     const response = await axios.get(
+    //       `https://b0ae-171-248-107-217.ap.ngrok.io/Participant/GetInfoRewardRecipients/${idAdward}`,
+    //       { withCredentials: true }
+    //     );
+    //     if (response.data?.data) {
+    //       const { data } = response.data;
+    //       const n1 = data[0];
+    //       const n2 = data[1];
+    //       const n3 = data[2];
+    //       setN1(data[0]);
+    //       setN2(data[1]);
+    //       setN3(data[2]);
+    //       setShow(true);
+
+    //       // setInfoParticipant(data);
+    //       // setShowInfo(true);
+    //     } else {
+    //       <Alert variant="danger">Có lỗi vấn đề đường truyền!</Alert>;
+    //     }
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   useEffect(() => {
