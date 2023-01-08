@@ -493,7 +493,7 @@ function Dashboard() {
       )}
 
       {navigator === "menu" && (
-        <div className="menu-container">
+        <div className="menu-dish-container">
           <MenuCard />
         </div>
       )}

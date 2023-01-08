@@ -1,19 +1,20 @@
 .book-wrap {
   height: 45rem;
-  width: 66rem;
+  min-width: 300px;
   border-radius: 1rem;
   padding: 2rem;
   position: relative;
   perspective: 250rem;
-  opacity: 0;
+  font-family: "Caveat", cursive;
+  /* opacity: 0;
   transform: rotate(-20deg);
-  animation: show-up 2s forwards;
+  animation: show-up 2s forwards; */
 }
 .cover {
   position: absolute;
   top: 0;
   left: 0;
-  width: 50%;
+  width: 100%;
   height: 100%;
   background-color: #2c3e50;
   box-shadow: 0 0 100px rgba(0, 0, 0, 0.3);
@@ -21,12 +22,12 @@
   border-bottom-left-radius: 1rem;
   transform-origin: 100% 100%;
 
-  transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
-  transform: rotateY(0);
+  /* transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transform: rotateY(0); */
 }
 
 .cover.turn {
-  transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+  /* transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1); */
   transform: rotateY(180deg);
 }
 
@@ -42,7 +43,7 @@
 
 .book-page {
   position: relative;
-  width: 50%;
+  width: 100%;
   height: 100%;
   padding: 2rem;
   display: grid;
@@ -52,4 +53,63 @@
   transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
   transform: rotateY(0);
   transform-origin: 0% 0%;
+}
+.menu-dish__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+  padding: 0 12px;
+  font-size: 20px;
+}
+.menu-dish__list li ~ li {
+  margin-top: 8px;
+}
+.introduce {
+  font-size: 16px;
+}
+
+.on-mobile {
+  display: block;
+}
+
+.on-desktop {
+  display: none;
+}
+
+@media only screen and (min-width: 601px) {
+  .book-wrap {
+    height: 45rem;
+    width: 66rem;
+    border-radius: 1rem;
+    padding: 2rem;
+    position: relative;
+    perspective: 250rem;
+    font-family: "Caveat", cursive;
+    /* opacity: 0;
+    transform: rotate(-20deg);
+    animation: show-up 2s forwards; */
+  }
+  .on-mobile {
+    display: none;
+  }
+  .on-desktop {
+    display: block;
+  }
+  .cover {
+    width: 50%;
+  }
+  .book-page {
+    width: 50%;
+  }
+  .introduce {
+    font-size: 24px;
+  }
+  .menu-dish__list {
+    padding: 0 40px;
+    font-size: 24px;
+  }
+  .menu-dish__list li ~ li {
+    margin-top: 20px;
+  }
 }
