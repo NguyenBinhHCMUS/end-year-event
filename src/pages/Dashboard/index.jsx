@@ -21,6 +21,7 @@ import Slide from "./component/Slide";
 import BottomNav from "./component/BottomNav";
 import Stepper from "./component/Stepper";
 import MenuCard from "./component/MenuCard";
+import StepperMenu from "./component/StepperMenu";
 
 function Dashboard() {
   const [navigator, setNavigator] = useState("home");
@@ -485,8 +486,8 @@ function Dashboard() {
         </div>
       )}
       {navigator === "timeline" && (
-        <div className="timeline-container">
-          <Stepper />
+        <div className="menu-dish-container">
+          <StepperMenu />
         </div>
       )}
 
