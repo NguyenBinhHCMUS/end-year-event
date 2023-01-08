@@ -438,12 +438,6 @@ function Dashboard() {
     window.onload = loop;
   }, []);
 
-  console.log(
-    historyAdward
-      .filter((item) => item?.adward === adwardSelected)
-      .map((item) => item)?.code
-  );
-
   return (
     <>
       <header>
