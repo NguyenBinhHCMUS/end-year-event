@@ -466,8 +466,8 @@ function Dashboard() {
               <h1 className="info-content-title">CÁM ƠN BẠN ĐÃ ĐẾN!</h1>
               <hr />
               <p className="info-content__thanks">
-                Công ty Khè Group chân thành cám ơn những đóng góp to lớn của
-                bạn cho chúng tôi.
+                Khè Group chân thành cám ơn những đóng góp to lớn của bạn cho
+                chúng tôi.
               </p>
               <div className="info-content__address">
                 <div className="info-content__address__left">
