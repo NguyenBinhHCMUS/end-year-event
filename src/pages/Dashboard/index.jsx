@@ -439,6 +439,12 @@ function Dashboard() {
     window.onload = loop;
   }, []);
 
+  console.log(
+    historyAdward
+      .filter((item) => item?.adward === adwardSelected)
+      .map((item) => item)?.code
+  );
+
   return (
     <>
       <header>
@@ -646,11 +652,11 @@ function Dashboard() {
             )}
 
             <p className="text-center text-white">
-              {
-                historyAdward
-                  .filter((item) => item?.adward === adwardSelected)
-                  .map((item) => item)?.code
-              }
+              {historyAdward
+                .filter((item) => item?.adward === adwardSelected)
+                .map((item) => (
+                  <span className="p-2">{item?.code}</span>
+                ))}
             </p>
 
             <div className="w-100 d-flex align-items-center justify-content-center">
