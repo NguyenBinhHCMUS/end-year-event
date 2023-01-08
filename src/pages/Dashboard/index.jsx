@@ -75,6 +75,34 @@ function Dashboard() {
     else setShow(true);
   };
 
+  const handleRandomNumber = async (idAdward) => {
+    try {
+      if (idAdward) {
+        const response = await axios.get(
+          `https://b0ae-171-248-107-217.ap.ngrok.io/Participant/GetInfoRewardRecipients/${idAdward}`,
+          { withCredentials: true }
+        );
+        if (response.data?.data) {
+          const { data } = response.data;
+          const n1 = data[0];
+          const n2 = data[1];
+          const n3 = data[2];
+          setN1(data[0]);
+          setN2(data[1]);
+          setN3(data[2]);
+          setShow(true);
+
+          // setInfoParticipant(data);
+          // setShowInfo(true);
+        } else {
+          <Alert variant="danger">Có lỗi vấn đề đường truyền!</Alert>;
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const codeSave = JSON.parse(localStorage.getItem("code"));
     if (codeSave) setInfoParticipant(codeSave);
@@ -438,12 +466,12 @@ function Dashboard() {
           <MenuCard />
         </div>
       )}
-      {navigator === "luckydraw" && <Slide />}
-      <div className="check-image">
+      {navigator === "luckydraw" && <Slide onSubmit={handleRandomNumber} />}
+      {/* <div className="check-image">
         <button style={{ border: "none" }} onClick={handleCheck}>
           <img src={card} alt="" />
         </button>
-      </div>
+      </div> */}
 
       <div className="backgound-image">
         {/* <img loading="lazy" src={backgoundImg} alt="" /> */}

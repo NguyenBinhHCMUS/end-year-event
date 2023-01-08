@@ -19,6 +19,11 @@ function Slide(props) {
     setSlideActive(newSlideActive);
   };
 
+  const handleShow = (idAdward) => {
+    setSlideAuto(false);
+    props.onSubmit(idAdward);
+  };
+
   useEffect(() => {
     let timer = null;
     if (slideAuto)
@@ -41,7 +46,11 @@ function Slide(props) {
             Apple MacBook Air M1 256GB
           </p>
           <div className="user-info">
-            <Button type="button" variant="primary">
+            <Button
+              type="button"
+              variant="primary"
+              onClick={() => handleShow(1)}
+            >
               Tiến hành quay số
             </Button>
           </div>
@@ -57,7 +66,11 @@ function Slide(props) {
             Loa Bluetooth Marshall Tufton
           </p>
           <div className="user-info">
-            <Button type="button" variant="primary">
+            <Button
+              type="button"
+              variant="primary"
+              onClick={() => handleShow(2)}
+            >
               Tiến hành quay số
             </Button>
           </div>
@@ -73,7 +86,11 @@ function Slide(props) {
             Apple Watch Series 7 41mm GPS Viền Nhôm
           </p>
           <div className="user-info">
-            <Button type="button" variant="primary">
+            <Button
+              type="button"
+              variant="primary"
+              onClick={() => handleShow(3)}
+            >
               Tiến hành quay số
             </Button>
           </div>
