@@ -12,13 +12,11 @@ import {
   Spinner,
 } from "react-bootstrap";
 import axios from "axios";
-import backgoundImg from "../../assets/img/tree.png";
 import logoImg from "../../assets/img/lgkhegr (1).webp";
 import logo2Img from "../../assets/img/LOGO KHE-01.png";
 import logo3Img from "../../assets/img/lgDK.png";
 import logo4Img from "../../assets/img/LGDORI.png";
-import dateImg from "../../assets/img/logo-removebg-preview.png";
-import card from "../../assets/img/thiep.png";
+import dateImg from "../../assets/img/logo-removebg-preview.webp";
 import Slide from "./component/Slide";
 import BottomNav from "./component/BottomNav";
 import Stepper from "./component/Stepper";

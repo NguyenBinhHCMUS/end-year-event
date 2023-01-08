@@ -55,12 +55,12 @@ header {
   top: 0;
   left: 0;
   z-index: -1;
-  background-image: url("../../assets/img/tree.png");
+  background-image: url("../../assets/img/tree.webp");
   background-color: #cccccc;
+  background-size: cover;
   width: 100%;
   height: 100vh;
-  object-fit: cover;
-  object-position: center;
+  background-position: center;
 }
 
 /* .backgound-image img {
