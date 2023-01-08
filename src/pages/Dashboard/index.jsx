@@ -9,6 +9,7 @@ import {
   Container,
   Row,
   Col,
+  Spinner,
 } from "react-bootstrap";
 import axios from "axios";
 import backgoundImg from "../../assets/img/tree.png";
@@ -35,6 +36,8 @@ function Dashboard() {
   const [code, setCode] = useState();
   const [infoParticipant, setInfoParticipant] = useState();
   const [adwardSelected, setAdwardSelected] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [historyAdward, setHistoryAdward] = useState([]);
 
   const handleNavigator = (target) => {
     setNavigator(target);
@@ -54,16 +57,9 @@ function Dashboard() {
     setN3(0);
   };
 
-  const handleRandomNumber = async () => {
-    if (adwardSelected) {
-      setStartRandom(true);
-
-      const response = axios.get(
-        `https://dd81-115-77-79-25.ap.ngrok.io/Participant/GetInfoRewardRecipients/${adwardSelected}`,
-        { withCredentials: true }
-      );
-      console.log(response);
-    }
+  const handleRandomNumberSlide = (idAdward) => {
+    setAdwardSelected(idAdward);
+    setShowRandom(true);
   };
 
   const handleGetInfoByCode = async () => {
@@ -100,35 +96,36 @@ function Dashboard() {
     else setShow(true);
   };
 
-  const handleRandomNumberSlide = (idAdward) => {
-    setShowRandom(true);
-    setAdwardSelected(idAdward);
+  const handleRandomNumber = async () => {
+    setIsLoading(true);
+    try {
+      if (adwardSelected) {
+        const response = await axios.get(
+          `https://b0ae-171-248-107-217.ap.ngrok.io/Participant/GetInfoRewardRecipients/${adwardSelected}`,
+          { withCredentials: true }
+        );
+        setIsLoading(false);
+        if (response.data?.data) {
+          const { data } = response.data;
+          setStartRandom(true);
+          setN1(data?.code[0]);
+          setN2(data?.code[1]);
+          setN3(data?.code[2]);
+        } else {
+          <Alert variant="danger">Có lỗi vấn đề đường truyền!</Alert>;
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
 
-    // try {
-    //   if (idAdward) {
-    //     const response = await axios.get(
-    //       `https://b0ae-171-248-107-217.ap.ngrok.io/Participant/GetInfoRewardRecipients/${idAdward}`,
-    //       { withCredentials: true }
-    //     );
-    //     if (response.data?.data) {
-    //       const { data } = response.data;
-    //       const n1 = data[0];
-    //       const n2 = data[1];
-    //       const n3 = data[2];
-    //       setN1(data[0]);
-    //       setN2(data[1]);
-    //       setN3(data[2]);
-    //       setShow(true);
-
-    //       // setInfoParticipant(data);
-    //       // setShowInfo(true);
-    //     } else {
-    //       <Alert variant="danger">Có lỗi vấn đề đường truyền!</Alert>;
-    //     }
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+  const handleSaveAdward = () => {
+    setHistoryAdward([
+      ...historyAdward,
+      { adward: adwardSelected, code: `${n1}${n2}${n3}` },
+    ]);
   };
 
   useEffect(() => {
@@ -604,23 +601,57 @@ function Dashboard() {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className={`wrapper-number ${startRandom && "start"}`}>
-              <div className="number-area">
-                <span className="num n1" data-attr="5741278934">
-                  {n1}
-                </span>
+            {!!isLoading ? (
+              <div className="spinner-loading">
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
               </div>
-              <div className="number-area">
-                <span className="num n2" data-attr="4785125986">
-                  {n2}
-                </span>
+            ) : startRandom === false ? (
+              <div className={`wrapper-number ${startRandom && "start"}`}>
+                <div className="number-area">
+                  <span className="num n1" data-attr="5741278934">
+                    0
+                  </span>
+                </div>
+                <div className="number-area">
+                  <span className="num n2" data-attr="4785125986">
+                    0
+                  </span>
+                </div>
+                <div className="number-area">
+                  <span className="num n3" data-attr="2478649812">
+                    0
+                  </span>
+                </div>
               </div>
-              <div className="number-area">
-                <span className="num n3" data-attr="2478649812">
-                  {n3}
-                </span>
+            ) : (
+              <div className={`wrapper-number ${startRandom && "start"}`}>
+                <div className="number-area">
+                  <span className="num n1" data-attr="5741278934">
+                    {n1}
+                  </span>
+                </div>
+                <div className="number-area">
+                  <span className="num n2" data-attr="4785125986">
+                    {n2}
+                  </span>
+                </div>
+                <div className="number-area">
+                  <span className="num n3" data-attr="2478649812">
+                    {n3}
+                  </span>
+                </div>
               </div>
-            </div>
+            )}
+
+            <p className="text-center text-white">
+              {
+                historyAdward
+                  .filter((item) => item?.adward === adwardSelected)
+                  .map((item) => item)?.code
+              }
+            </p>
 
             <div className="w-100 d-flex align-items-center justify-content-center">
               <Button
@@ -639,14 +670,19 @@ function Dashboard() {
               >
                 Làm mới
               </Button>
+              <Button
+                className="mx-2"
+                style={{ width: "100px" }}
+                variant="primary"
+                onClick={handleSaveAdward}
+              >
+                Lưu
+              </Button>
             </div>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseRandom}>
               Đóng
-            </Button>
-            <Button variant="primary" onClick={handleCloseRandom}>
-              Lưu
             </Button>
           </Modal.Footer>
         </div>

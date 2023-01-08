@@ -27,10 +27,12 @@
   z-index: 3;
 }
 .directional #next {
-  transform: translateX(34vw);
+  position: absolute;
+  right: 0;
 }
 .directional #prev {
-  transform: translateX(-34vw);
+  position: absolute;
+  left: 0;
 }
 .directional button {
   width: 50px;
@@ -226,11 +228,12 @@
 
 @media only screen and (min-width: 601px) {
   .slide-container {
-    width: 1440px;
-    height: 900px;
+    width: 80%;
+    height: auto;
     margin: 0 auto;
   }
   .user-info {
+    padding-bottom: 40px;
     display: block;
     width: 100%;
     text-align: center;
@@ -240,5 +243,12 @@
     width: 300px;
     height: 60px;
     font-size: 24px;
+  }
+  .spinner-loading {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

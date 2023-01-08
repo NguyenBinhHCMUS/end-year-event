@@ -3,6 +3,7 @@ import { Button, Form } from "react-bootstrap";
 import macproImg from "../../../assets/img/macbook-pro-m2.png";
 import adward2 from "../../../assets/img/Picture1.png";
 import adward3 from "../../../assets/img/Picture2.png";
+import adward4 from "../../../assets/img/Picture4 (1).png";
 import leftIcon from "../../../assets/img/left_gh9ln8er1m6n_32 (1).png";
 import rightIcon from "../../../assets/img/right_vi24vzlqsbfj_32.png";
 import "./slide.css";
@@ -11,11 +12,11 @@ function Slide(props) {
   const [slideActive, setSlideActive] = useState(0);
   const [slideAuto, setSlideAuto] = useState(true);
   const handlePrevSlide = () => {
-    const newSlideActive = slideActive === 0 ? 2 : slideActive - 1;
+    const newSlideActive = slideActive === 0 ? 3 : slideActive - 1;
     setSlideActive(newSlideActive);
   };
   const handleNextSlide = () => {
-    const newSlideActive = slideActive === 2 ? 0 : slideActive + 1;
+    const newSlideActive = slideActive === 3 ? 0 : slideActive + 1;
     setSlideActive(newSlideActive);
   };
 
@@ -90,6 +91,26 @@ function Slide(props) {
               type="button"
               variant="primary"
               onClick={() => handleShow(3)}
+            >
+              Tiến hành quay số
+            </Button>
+          </div>
+        </div>
+        <div className={`item ${slideActive === 3 && "slide-active"}`}>
+          <h2 className="slide-item__title">03 GIẢI PHỤ</h2>
+          <div style={{ position: "relative", width: "100%", height: "auto" }}>
+            <div className="image">
+              <img className="image-04" loading="lazy" src={adward4} />
+            </div>
+          </div>
+          <p style={{ padding: "0 12px", textAlign: "center" }}>
+            Pernod Ricard
+          </p>
+          <div className="user-info">
+            <Button
+              type="button"
+              variant="primary"
+              onClick={() => handleShow(4)}
             >
               Tiến hành quay số
             </Button>

@@ -477,6 +477,11 @@ footer {
   animation-iteration-count: 16;
 }
 
+.image-04 {
+  width: 200px;
+  height: 180px;
+}
+
 @media only screen and (min-width: 601px) {
   .backgound-image {
     background-image: url("../../assets/img/bg4.png");
@@ -527,5 +532,9 @@ footer {
   .info-content__address__right {
     padding-left: 4px;
     border-left: 2px solid #fff;
+  }
+  .image-04 {
+    width: 400px;
+    height: 600px;
   }
 }
