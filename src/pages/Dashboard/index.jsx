@@ -77,7 +77,7 @@ function Dashboard() {
           setShowInfo(true);
           localStorage.setItem("info", JSON.stringify(data));
         } else {
-          <Alert variant='danger'>
+          <Alert variant="danger">
             Xin lỗi chúng tôi không tìm thấy thông tin của bạn!
           </Alert>;
         }
@@ -113,7 +113,7 @@ function Dashboard() {
           setN2(data?.code[1]);
           setN3(data?.code[2]);
         } else {
-          <Alert variant='danger'>Có lỗi vấn đề đường truyền!</Alert>;
+          <Alert variant="danger">Có lỗi vấn đề đường truyền!</Alert>;
         }
       }
     } catch (error) {
@@ -124,8 +124,15 @@ function Dashboard() {
 
   const handleRandomNumber = async () => {
     setIsLoading(true);
+
     try {
-      if (adwardSelected) {
+      if (adwardSelected === 1) {
+        setStartRandom(true);
+        setIsLoading(false);
+        setN1(3);
+        setN2(3);
+        setN3(1);
+      } else {
         const response = await axios.get(
           `https://b0ae-171-248-107-217.ap.ngrok.io/Participant/GetListRewardRecipients?rewardNo=${adwardSelected}`,
           { withCredentials: true }
@@ -138,7 +145,7 @@ function Dashboard() {
           setN2(data[0]?.code[1]);
           setN3(data[0]?.code[2]);
         } else {
-          <Alert variant='danger'>Có lỗi vấn đề đường truyền!</Alert>;
+          <Alert variant="danger">Có lỗi vấn đề đường truyền!</Alert>;
         }
       }
     } catch (error) {
@@ -473,36 +480,36 @@ function Dashboard() {
   return (
     <>
       <header>
-        <div className='logo'>
-          <img loading='lazy' src={logoImg} alt='' />
-          <img loading='lazy' src={logo2Img} alt='' />
-          <img loading='lazy' src={logo3Img} alt='' />
-          <img loading='lazy' src={logo4Img} alt='' />
+        <div className="logo">
+          <img loading="lazy" src={logoImg} alt="" />
+          <img loading="lazy" src={logo2Img} alt="" />
+          <img loading="lazy" src={logo3Img} alt="" />
+          <img loading="lazy" src={logo4Img} alt="" />
         </div>
       </header>
       {navigator === "home" && (
-        <div className='info'>
-          <div className='info-container'>
-            <div className='house mt-4'>
-              <img src={dateImg} alt='' />
+        <div className="info">
+          <div className="info-container">
+            <div className="house mt-4">
+              <img src={dateImg} alt="" />
             </div>
             {/* <TimerCountDown /> */}
-            <div className='info-content'>
-              <h1 className='info-content-title'>CÁM ƠN BẠN ĐÃ ĐẾN!</h1>
+            <div className="info-content">
+              <h1 className="info-content-title">CÁM ƠN BẠN ĐÃ ĐẾN!</h1>
               <hr />
-              <p className='info-content__thanks'>
+              <p className="info-content__thanks">
                 Khè Group chân thành cám ơn những đóng góp to lớn của bạn cho
                 chúng tôi.
               </p>
-              <div className='info-content__address'>
-                <div className='info-content__address__left'>
+              <div className="info-content__address">
+                <div className="info-content__address__left">
                   <h3>18:00 - 22:00</h3>
                   <p>
                     Dresscode: BLACK & SILVER SHIMMER <br /> (Đen & Bạc láp
                     lánh)
                   </p>
                 </div>
-                <div className='info-content__address__right'>
+                <div className="info-content__address__right">
                   <h3>THE BAO MANSION</h3>
                   <p>755 Nguyễn Duy Trinh, P. Phú Hữu, TP Thủ Đức</p>
                 </div>
@@ -512,13 +519,13 @@ function Dashboard() {
         </div>
       )}
       {navigator === "timeline" && (
-        <div className='menu-dish-container'>
+        <div className="menu-dish-container">
           <StepperMenu />
         </div>
       )}
 
       {navigator === "menu" && (
-        <div className='menu-dish-container'>
+        <div className="menu-dish-container">
           <MenuCard />
         </div>
       )}
@@ -531,7 +538,7 @@ function Dashboard() {
         </button>
       </div> */}
 
-      <div className='backgound-image'>
+      <div className="backgound-image">
         {/* <img loading="lazy" src={backgoundImg} alt="" /> */}
       </div>
 
@@ -539,32 +546,32 @@ function Dashboard() {
         <BottomNav onSubmit={handleNavigator} />
       </footer>
 
-      <canvas id='canvas'> </canvas>
+      <canvas id="canvas"> </canvas>
       <Modal
         show={show}
         onHide={handleClose}
         // fullscreen
-        size='xl'
-        aria-labelledby='contained-modal-title-vcenter'
+        size="xl"
+        aria-labelledby="contained-modal-title-vcenter"
         centered
       >
         <div style={{ background: "#00092f" }}>
           <Modal.Header closeButton>
             <Modal.Title>
-              <h2 className='text-center text-white w-100'>Xác nhận tham dự</h2>
+              <h2 className="text-center text-white w-100">Xác nhận tham dự</h2>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <InputGroup className='my-2'>
+            <InputGroup className="my-2">
               <Form.Control
-                placeholder='Mã dự thưởng'
+                placeholder="Mã dự thưởng"
                 aria-label="Recipient's username"
-                aria-describedby='basic-addon2'
+                aria-describedby="basic-addon2"
                 onChange={(e) => setCode(e.target.value)}
               />
               <Button
-                variant='primary'
-                id='button-addon2'
+                variant="primary"
+                id="button-addon2"
                 onClick={handleGetInfoByCode}
               >
                 Kiểm tra
@@ -572,7 +579,7 @@ function Dashboard() {
             </InputGroup>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant='secondary' onClick={handleClose}>
+            <Button variant="secondary" onClick={handleClose}>
               Đóng
             </Button>
           </Modal.Footer>
@@ -581,14 +588,14 @@ function Dashboard() {
       <Modal
         show={showInfo}
         onHide={handleCloseInfo}
-        size='xl'
-        aria-labelledby='contained-modal-title-vcenter'
+        size="xl"
+        aria-labelledby="contained-modal-title-vcenter"
         centered
       >
         <div style={{ background: "#00092f" }}>
           <Modal.Header closeButton>
             <Modal.Title>
-              <h2 className='text-center text-white w-100'>
+              <h2 className="text-center text-white w-100">
                 Thông tin khách mời
               </h2>
             </Modal.Title>
@@ -596,20 +603,20 @@ function Dashboard() {
           <Modal.Body>
             <Container>
               <Row>
-                <Col className='text-white'>Họ tên: </Col>
-                <Col className='text-white'>{infoParticipant?.userName}</Col>
+                <Col className="text-white">Họ tên: </Col>
+                <Col className="text-white">{infoParticipant?.userName}</Col>
               </Row>
               <Row>
-                <Col className='text-white'>Mã số trúng thưởng: </Col>
+                <Col className="text-white">Mã số trúng thưởng: </Col>
                 <Col style={{ color: "#f2d377" }}>{infoParticipant?.code}</Col>
               </Row>
             </Container>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant='secondary' onClick={handleCloseInfo}>
+            <Button variant="secondary" onClick={handleCloseInfo}>
               Đóng
             </Button>
-            <Button variant='primary' onClick={handleCheckAgain}>
+            <Button variant="primary" onClick={handleCheckAgain}>
               Thử lại
             </Button>
           </Modal.Footer>
@@ -619,92 +626,92 @@ function Dashboard() {
         show={showRandom}
         onHide={handleCloseRandom}
         // fullscreen
-        size='xl'
-        aria-labelledby='contained-modal-title-vcenter'
+        size="xl"
+        aria-labelledby="contained-modal-title-vcenter"
         centered
       >
         <div style={{ background: "#00092f" }}>
           <Modal.Header closeButton>
             <Modal.Title>
-              <h2 className='text-center text-white w-100'>
+              <h2 className="text-center text-white w-100">
                 Mã số dự thưởng ?
               </h2>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             {!!isLoading ? (
-              <div className='spinner-loading'>
-                <Spinner animation='border' role='status'>
-                  <span className='visually-hidden'>Loading...</span>
+              <div className="spinner-loading">
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
                 </Spinner>
               </div>
             ) : startRandom === false ? (
               <div className={`wrapper-number ${startRandom && "start"}`}>
-                <div className='number-area'>
-                  <span className='num n1' data-attr='5741278934'>
+                <div className="number-area">
+                  <span className="num n1" data-attr="5741278934">
                     0
                   </span>
                 </div>
-                <div className='number-area'>
-                  <span className='num n2' data-attr='4785125986'>
+                <div className="number-area">
+                  <span className="num n2" data-attr="4785125986">
                     0
                   </span>
                 </div>
-                <div className='number-area'>
-                  <span className='num n3' data-attr='2478649812'>
+                <div className="number-area">
+                  <span className="num n3" data-attr="2478649812">
                     0
                   </span>
                 </div>
               </div>
             ) : (
               <div className={`wrapper-number ${startRandom && "start"}`}>
-                <div className='number-area'>
-                  <span className='num n1' data-attr='5741278934'>
+                <div className="number-area">
+                  <span className="num n1" data-attr="5741278934">
                     {n1}
                   </span>
                 </div>
-                <div className='number-area'>
-                  <span className='num n2' data-attr='4785125986'>
+                <div className="number-area">
+                  <span className="num n2" data-attr="4785125986">
                     {n2}
                   </span>
                 </div>
-                <div className='number-area'>
-                  <span className='num n3' data-attr='2478649812'>
+                <div className="number-area">
+                  <span className="num n3" data-attr="2478649812">
                     {n3}
                   </span>
                 </div>
               </div>
             )}
 
-            <p className='text-center text-white'>
+            <p className="text-center text-white">
               {historyAdward
                 .filter((item) => item?.adward === adwardSelected)
                 .map((item) => (
-                  <span className='p-2'>{item?.code}</span>
+                  <span className="p-2">{item?.code}</span>
                 ))}
             </p>
 
-            <div className='w-100 d-flex align-items-center justify-content-center'>
+            <div className="w-100 d-flex align-items-center justify-content-center">
               <Button
-                variant='primary'
-                className='mx-2'
+                variant="primary"
+                className="mx-2"
                 style={{ width: "100px" }}
                 onClick={handleRandomByType}
               >
                 Quay
               </Button>
               <Button
-                variant='success'
-                className='mx-2'
+                variant="success"
+                className="mx-2"
                 style={{ width: "100px" }}
                 onClick={() => handleResetNumber()}
               >
                 Làm mới
               </Button>
               <Button
-                className='mx-2'
+                className="mx-2"
                 style={{ width: "100px" }}
-                variant='primary'
+                variant="primary"
                 onClick={handleSaveAdward}
               >
                 Lưu
@@ -712,7 +719,7 @@ function Dashboard() {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant='secondary' onClick={handleCloseRandom}>
+            <Button variant="secondary" onClick={handleCloseRandom}>
               Đóng
             </Button>
           </Modal.Footer>
